@@ -57,19 +57,19 @@ namespace Doze
         protected override void OnNavigatedTo( NavigationEventArgs e )
         {
             base.OnNavigatedTo(e);
-            FindName("MainStack");
-            MainStack.Visibility = Visibility.Visible;
-            indicator.Width = slid.Value;
+            FindName("BtrControl");
+            BtrControl.Visibility = Visibility.Visible;
         }
 
         private void slid_ValueChanged( object sender, RangeBaseValueChangedEventArgs e )
         {
-           indicator.Width = slid.Value;
+            BtrControl.UseLayoutRounding = true;
+            BtrControl.IndicatorRect.Width = e.NewValue;
+            BtrControl.StatsText.Text = e.NewValue.ToString();
         }
 
         private void rotate( object sender, RoutedEventArgs e )
         {
-            BatteryGrid.UseLayoutRounding = true;
         }
 
         public void UpdateBatteryStats(BatteryReport report)
