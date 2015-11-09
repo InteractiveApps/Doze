@@ -1,0 +1,66 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Doze"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Universal="using:Microsoft.AdMediator.Universal"
+    x:Class="Doze.MainPage"
+    mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                x:DeferLoadStrategy="Lazy"
+                x:Name="MainStack">
+
+        <TextBlock Text="{x:Bind TimeToFullCharge}" FontSize="23"/>
+        <TextBlock Text="{x:Bind ChargeRemaining}" FontSize="23"/>
+        <TextBlock Text="{x:Bind ChargeCapacity}" FontSize="23"/>
+        <TextBlock Text="{x:Bind ChargeRate}" FontSize="23"/>
+
+        <StackPanel x:Name="BatteryGrid"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center" 
+			RenderTransformOrigin=".5,.5"
+			Orientation="Horizontal">
+            <StackPanel.RenderTransform>
+                <RotateTransform Angle="0"/>
+            </StackPanel.RenderTransform>
+
+            <Grid BorderBrush="#222222"
+				BorderThickness="4"
+				Width="255"
+				Height="100">
+
+                <Rectangle Width="20"
+					Height="100"
+					x:Name="indicator"
+                    Fill="Green"
+                           Margin="3"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Stretch"/>
+                
+                <TextBlock Text="25%" FontSize="50"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                
+            </Grid>
+
+            <Rectangle Fill="#222222"
+				Height="50"
+				Width="25"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"/>
+
+        </StackPanel>
+
+        <Slider CanDrag="True" 
+			x:Name="slid" 
+			Maximum="250"
+			Value="0"
+            Width="200"
+			ValueChanged="slid_ValueChanged"/>
+
+        <Button Content="rotate" Click="rotate" Margin="10"/>
+
+    </StackPanel>
+</Page>
