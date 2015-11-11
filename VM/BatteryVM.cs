@@ -12,8 +12,8 @@ namespace Doze.VM
 {
     public class BatteryVM : INotifyPropertyChanged
     {
-        public BatteryReport  report { get; set; }
-
+        public BatteryReport report { get; set; }
+        public Battery B { get; set; }
         private BatteryModel _Batterie;
         public BatteryModel Batterie
         {
@@ -25,13 +25,60 @@ namespace Doze.VM
             }
         }
 
+
+        private bool _isPresent;
+        public bool isPresent
+        {
+            get { return _isPresent; }
+            set
+            {
+                if (value != _isPresent) _isPresent = value;
+                OnPropertyChanged("isPresent");
+            }
+        }
+
+
+        private bool _isCharging;
+        public bool isCharging
+        {
+            get { return _isCharging; }
+            set
+            {
+                if (value != _isCharging) _isCharging = value;
+                OnPropertyChanged("isCharging");
+            }
+        }
+
         public BatteryVM()
         {
-            Battery B = Battery.AggregateBattery;
+            B = Battery.AggregateBattery;
+
             report = B.GetReport();
+
             if (report.Status == BatteryStatus.NotPresent)
+                isPresent = false;
+
+            else if (report.Status != BatteryStatus.NotPresent)
             {
                 Batterie = new BatteryModel((int)report.FullChargeCapacityInMilliwattHours, (int)report.FullChargeCapacityInMilliwattHours, (int)report.FullChargeCapacityInMilliwattHours, report.Status, (int)report.FullChargeCapacityInMilliwattHours);
+                isCharging = report.Status == BatteryStatus.Charging ? true : false;
+            }
+
+            B.ReportUpdated += B_ReportUpdated;
+
+        }
+
+        private void B_ReportUpdated( Battery sender, object args )
+        {
+            report = B.GetReport();
+
+            if (report.Status == BatteryStatus.NotPresent)
+                isPresent = false;
+
+            else if (report.Status != BatteryStatus.NotPresent)
+            {
+                Batterie = new BatteryModel((int)report.FullChargeCapacityInMilliwattHours, (int)report.FullChargeCapacityInMilliwattHours, (int)report.FullChargeCapacityInMilliwattHours, report.Status, (int)report.FullChargeCapacityInMilliwattHours);
+                isCharging = report.Status == BatteryStatus.Charging ? true : false;
             }
 
         }

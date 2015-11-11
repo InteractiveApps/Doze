@@ -4,18 +4,16 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:Universal="using:Microsoft.AdMediator.Universal"
+	  xmlns:VM="using:Doze.VM"
 	  x:Class="Doze.MainPage"
 	  mc:Ignorable="d">
 
-	<Page.Resources>
-		<Style TargetType="TextBlock">
-			<Setter Property="FontFamily"
-					Value="Impact"/>
-		</Style>
-	</Page.Resources>
+	<Page.DataContext>
+		<VM:BatteryVM x:Name="B_VM"/>
+	</Page.DataContext>
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+		
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
@@ -34,17 +32,16 @@
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Center"
 					   FontSize="30" />
+			
 		</Grid>
 
 		<RelativePanel Grid.Row="1"
 					   HorizontalAlignment="Stretch"
-					   VerticalAlignment="Stretch">
+					   VerticalAlignment="Stretch"
+					   x:Name="MainGrid"
+					   x:DeferLoadStrategy="Lazy"
+					   Visibility="Visible">
 
-			<TextBlock RelativePanel.Above="BatteryAsset"
-					   RelativePanel.AlignHorizontalCenterWith="BatteryAsset"
-					   Text="🔌"
-					   Margin="15"
-					   FontSize="50" />
 
 			<Border x:Name="CircleBorder"
 					BorderThickness="5"
@@ -64,25 +61,25 @@
 			<local:BatteryControl x:Name="BatteryAsset"
 								  RelativePanel.AlignHorizontalCenterWithPanel="True"
 								  RelativePanel.AlignVerticalCenterWithPanel="True" />
-			<Slider Name="slider"
+			
+			<TextBlock RelativePanel.Above="BatteryAsset"
+					   RelativePanel.AlignHorizontalCenterWith="BatteryAsset"
+					   x:Name="ElectricPlugText"
+					   Text="🔌"
+					   Margin="15"
+					   FontSize="50" />
+			<!--<Slider x:Name="slider"
 					Value="0"
 					Width="300"
 					Minimum="0"
 					Maximum="100"
-					ValueChanged="slider_ValueChanged" />
+					ValueChanged="slider_ValueChanged" />-->
 		</RelativePanel>
-		
 
 		<CommandBar Grid.Row="1"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Bottom"
 					ClosedDisplayMode="Compact">
-
-			<AppBarButton Icon="Favorite"
-						  Label="Rate Us" />
-			<AppBarSeparator />
-			<AppBarButton Icon="Setting"
-						  Label="Settings" />
 
 			<CommandBar.SecondaryCommands>
 
@@ -92,7 +89,14 @@
 
 			</CommandBar.SecondaryCommands>
 
+			<AppBarButton Icon="Favorite"
+						  Label="Rate Us" />
+			<AppBarSeparator />
+			<AppBarButton Icon="Setting"
+						  Label="Settings" />
+
 		</CommandBar>
+		
 	</Grid>
 
 </Page>

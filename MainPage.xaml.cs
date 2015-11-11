@@ -1,4 +1,5 @@
-﻿using Microsoft.AdMediator.Core.Models;
+﻿using Doze.VM;
+using Microsoft.AdMediator.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,9 +29,26 @@ namespace Doze
     public sealed partial class MainPage : Page
     {
 
+        string[ ] OopsText =
+        {
+            "Oops! Check your Battery.",
+            "I Don't think you have one.",
+            "No Battery Found.",
+            "Is your Battery functioning?"
+        };
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo( NavigationEventArgs e )
+        {
+            base.OnNavigatedTo(e);
+            this.FindName("MainGrid");
+            MainGrid.Visibility = Visibility.Visible;
+            B_VM = new VM.BatteryVM();
+            UpdateIndicator(B_VM);
         }
 
         void UpdateIndicatorColor( double Percentage )
@@ -41,22 +59,46 @@ namespace Doze
             else if (Percentage > 25) BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.Green);
         }
 
-        void UpdateIndicatoSize( double Percentage )
+        void UpdateIndicatorSize( double Percentage )
         {
-            BatteryAsset.IndicatorRect.Width = (Percentage/100)*255;
+            BatteryAsset.IndicatorRect.Width = (Percentage / 100) * 255;
         }
-        void UpdateIndicatorText(string text )
+
+        void UpdateIndicatorText( string text )
         {
             string t = text + "%";
             BatteryAsset.StatsText.Text = t;
         }
 
-        private void slider_ValueChanged( object sender, RangeBaseValueChangedEventArgs e )
+        void ShowEmptyBattery()
         {
-            UpdateIndicatoSize(e.NewValue);
-            UpdateIndicatorColor(e.NewValue);
-            UpdateIndicatorText(e.NewValue.ToString());
-            CircleBorder.Opacity = e.NewValue / 100;
+            BatteryAsset.IndicatorRect.Width = 0;
+            BatteryAsset.StatsText.Text = "Error !";
         }
+
+        void UpdateIndicator( BatteryVM BVM )
+        {
+            if (BVM.isPresent)
+            {
+                double percentage = (BVM.Batterie.RemainingCapacity / BVM.Batterie.BatteryCapacity) * 100;
+                UpdateIndicatorColor(percentage);
+                UpdateIndicatorSize(percentage);
+                UpdateIndicatorText(percentage.ToString());
+                if (BVM.isCharging)
+                {
+                    ElectricPlugText.FontSize = 50;
+                    ElectricPlugText.Text = "🔌";
+                }
+            }
+            else
+            {
+                ShowEmptyBattery();
+                ElectricPlugText.FontSize = 15;
+                Random r = new Random();
+                ElectricPlugText.Text = OopsText[r.Next(0, 3)];
+            }
+
+        }
+
     }
 }
