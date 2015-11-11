@@ -8,6 +8,7 @@ using Windows.Devices.Power;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System.Power;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,60 +27,17 @@ namespace Doze
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public Battery _battery { get; set; }
-        public BatteryReport _report { get; set; }
-        public BatteryStatus _status { get; set; }
-        public int TimeToFullCharge { get; private set; }
-        public int ChargeRemaining { get; private set; }
-        public int ChargeCapacity { get; private set; }
-        public int ChargeRate { get; private set; }
 
         public MainPage()
         {
             this.InitializeComponent();
-            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Devices.Power.Battery",1))
-            {
-                _battery = Battery.AggregateBattery;
-                _report = _battery.GetReport();
-                UpdateBatteryStats(_report);
-                _battery.ReportUpdated += BatteryReportUpdated;
-            }
         }
 
-        private void BatteryReportUpdated( Battery sender, object args )
+        private void Button_Click( object sender, RoutedEventArgs e )
         {
-            throw new NotImplementedException();
-            var rep = (sender as Battery).GetReport();
-            UpdateBatteryStats(rep);
-            
+            RequestedTheme =  RequestedTheme == ElementTheme.Dark ?  ElementTheme.Light : ElementTheme.Dark;
+            BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.Red);
+            BatteryAsset.StatsText.Text = "40%";
         }
-
-        protected override void OnNavigatedTo( NavigationEventArgs e )
-        {
-            base.OnNavigatedTo(e);
-            FindName("BtrControl");
-            BtrControl.Visibility = Visibility.Visible;
-        }
-
-        private void slid_ValueChanged( object sender, RangeBaseValueChangedEventArgs e )
-        {
-            BtrControl.UseLayoutRounding = true;
-            BtrControl.IndicatorRect.Width = e.NewValue;
-            BtrControl.StatsText.Text = e.NewValue.ToString();
-        }
-
-        private void rotate( object sender, RoutedEventArgs e )
-        {
-        }
-
-        public void UpdateBatteryStats(BatteryReport report)
-        {
-            _status = report.Status;
-            TimeToFullCharge = (int)report.FullChargeCapacityInMilliwattHours;
-            ChargeRemaining = (int)report.RemainingCapacityInMilliwattHours;
-            ChargeCapacity = (int)report.DesignCapacityInMilliwattHours;
-            ChargeRate = (int)report.ChargeRateInMilliwatts;
-        }
-
     }
 }

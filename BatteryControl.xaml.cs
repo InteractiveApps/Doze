@@ -20,8 +20,6 @@ namespace Doze
 {
     public sealed partial class BatteryControl : UserControl
     {
-
-
         public StackPanel BatteryGrid
         {
             get { return (StackPanel)GetValue(BatteryGridProperty); }
@@ -30,9 +28,7 @@ namespace Doze
 
         // Using a DependencyProperty as the backing store for BatteryGrid.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BatteryGridProperty =
-            DependencyProperty.Register("BatteryGrid", typeof(StackPanel), typeof(StackPanel), new PropertyMetadata(null));
-
-
+            DependencyProperty.Register("BatteryGrid", typeof(StackPanel), typeof(BatteryControl), new PropertyMetadata(null));
 
         public RotateTransform BatteryRotateTransform
         {
@@ -42,11 +38,7 @@ namespace Doze
 
         // Using a DependencyProperty as the backing store for BatteryRotateTransform.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BatteryRotateTransformProperty =
-            DependencyProperty.Register("BatteryRotateTransform", typeof(RotateTransform), typeof(RotateTransform), new PropertyMetadata(null));
-
-
-
-
+            DependencyProperty.Register("BatteryRotateTransform", typeof(RotateTransform), typeof(BatteryControl), new PropertyMetadata(null));
 
         public Rectangle IndicatorRect
         {
@@ -56,9 +48,7 @@ namespace Doze
 
         // Using a DependencyProperty as the backing store for IndicatorRect.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IndicatorRectProperty =
-            DependencyProperty.Register("IndicatorRect", typeof(Rectangle), typeof(Rectangle), new PropertyMetadata(null));
-
-
+            DependencyProperty.Register("IndicatorRect", typeof(Rectangle), typeof(BatteryControl), new PropertyMetadata(null));
 
 
         public TextBlock StatsText
@@ -69,9 +59,38 @@ namespace Doze
 
         // Using a DependencyProperty as the backing store for StatsText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatsTextProperty =
-            DependencyProperty.Register("StatsText", typeof(TextBlock), typeof(TextBlock), new PropertyMetadata(null));
+            DependencyProperty.Register("StatsText", typeof(TextBlock), typeof(BatteryControl), new PropertyMetadata(null));
+
+        public Brush BatteryIndicatorColor
+        {
+            get { return (Brush)GetValue(BatteryIndicatorColorProperty); }
+            set { SetValue(BatteryIndicatorColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BatteryIndicatorColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BatteryIndicatorColorProperty =
+            DependencyProperty.Register("BatteryIndicatorColor", typeof(Brush), typeof(BatteryControl), new PropertyMetadata("Green"));
+
+        public int RoundingCoeff
+        {
+            get { return (int)GetValue(RoundingCoeffProperty); }
+            set { SetValue(RoundingCoeffProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for RoundingCoeff.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RoundingCoeffProperty =
+            DependencyProperty.Register("RoundingCoeff", typeof(int), typeof(BatteryControl), new PropertyMetadata(0));
 
 
+        public Brush BatteryOuterCOlor
+        {
+            get { return (Brush)GetValue(BatteryOuterCOlorProperty); }
+            set { SetValue(BatteryOuterCOlorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BatteryOuterCOlor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BatteryOuterCOlorProperty =
+            DependencyProperty.Register("BatteryOuterCOlor", typeof(Brush), typeof(BatteryControl), new PropertyMetadata("#222222"));
 
         public BatteryControl()
         {
@@ -80,6 +99,9 @@ namespace Doze
             BatteryRotateTransform = Battery_RotateTransform;
             IndicatorRect = indicator;
             StatsText = StatusText;
+            BatteryIndicatorColor = IndicatorRect.Fill;
+            BatteryOuterCOlor = BatteryFrameGrid.BorderBrush;
         }
+
     }
 }

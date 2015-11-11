@@ -96,5 +96,14 @@ namespace Doze
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        public void SwitchTheme() {
+
+            if (Current.RequestedTheme == ApplicationTheme.Dark)
+                RequestedTheme = (ApplicationTheme)ElementTheme.Light;
+            else
+                RequestedTheme = (ApplicationTheme)ElementTheme.Dark;
+        }
+
     }
 }
