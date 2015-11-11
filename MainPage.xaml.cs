@@ -33,11 +33,30 @@ namespace Doze
             this.InitializeComponent();
         }
 
-        private void Button_Click( object sender, RoutedEventArgs e )
+        void UpdateIndicatorColor( double Percentage )
         {
-            RequestedTheme =  RequestedTheme == ElementTheme.Dark ?  ElementTheme.Light : ElementTheme.Dark;
-            BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.Red);
-            BatteryAsset.StatsText.Text = "40%";
+            if (Percentage < 14) BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.Red);
+            else if (Percentage < 20) BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.DarkOrange);
+            else if (Percentage < 25) BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.Yellow);
+            else if (Percentage > 25) BatteryAsset.IndicatorRect.Fill = new SolidColorBrush(Colors.Green);
+        }
+
+        void UpdateIndicatoSize( double Percentage )
+        {
+            BatteryAsset.IndicatorRect.Width = (Percentage/100)*255;
+        }
+        void UpdateIndicatorText(string text )
+        {
+            string t = text + "%";
+            BatteryAsset.StatsText.Text = t;
+        }
+
+        private void slider_ValueChanged( object sender, RangeBaseValueChangedEventArgs e )
+        {
+            UpdateIndicatoSize(e.NewValue);
+            UpdateIndicatorColor(e.NewValue);
+            UpdateIndicatorText(e.NewValue.ToString());
+            CircleBorder.Opacity = e.NewValue / 100;
         }
     }
 }

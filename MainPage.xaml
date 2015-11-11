@@ -35,23 +35,33 @@
 			<TextBlock RelativePanel.AlignRightWithPanel="True"
 					   RelativePanel.AlignTopWithPanel="True"
 					   Text="🔌"
-					   FontSize="50"/>
-			
-			<Ellipse Height="350"
-					 Width="350"
-					 Fill="#252839"
-					 Opacity=".5"
-					 RelativePanel.AlignHorizontalCenterWithPanel="True"
-					 RelativePanel.AlignVerticalCenterWithPanel="True"/>
+					   FontSize="50" />
+
+			<Border x:Name="CircleBorder"
+					BorderThickness="5"
+					BorderBrush="GreenYellow"
+					Opacity=".1"
+					CornerRadius="250"
+					RelativePanel.AlignHorizontalCenterWithPanel="True"
+					RelativePanel.AlignVerticalCenterWithPanel="True">
+
+				<Ellipse Height="350"
+						 Width="350"
+						 Fill="#252839"
+						 Opacity=".5" />
+
+			</Border>
 
 			<local:BatteryControl x:Name="BatteryAsset"
 								  RelativePanel.AlignHorizontalCenterWithPanel="True"
 								  RelativePanel.AlignVerticalCenterWithPanel="True" />
-
+			<Slider Name="slider"
+					Value="0"
+					Width="300"
+					Minimum="0"
+					Maximum="100"
+					ValueChanged="slider_ValueChanged" />
 		</RelativePanel>
-		
-		<Button Content="low battry"
-				Click="Button_Click"/>
 
 		<CommandBar Grid.Row="1"
 					HorizontalAlignment="Stretch"

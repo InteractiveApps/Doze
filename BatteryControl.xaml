@@ -24,7 +24,7 @@
 			  Height="100">
 			
 			<Rectangle Width="20"
-					   Height="100"
+					   Height="90"
 					   x:Name="indicator"
 					   Fill="Green"
 					   Margin="3"
