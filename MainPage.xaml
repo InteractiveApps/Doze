@@ -7,6 +7,13 @@
 	  x:Class="Doze.MainPage"
 	  mc:Ignorable="d">
 
+	<Page.Resources>
+		<Style TargetType="TextBlock">
+			<Setter Property="FontFamily"
+					Value="Impact"/>
+		</Style>
+	</Page.Resources>
+
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 		<Grid.RowDefinitions>
@@ -21,6 +28,7 @@
 			<TextBlock Text="DOZE"
 					   Grid.Column="1"
 					   FontFamily="Impact"
+					   FontWeight="ExtraLight"
 					   Foreground="#252839"
 					   CharacterSpacing="1000"
 					   VerticalAlignment="Center"
@@ -32,9 +40,10 @@
 					   HorizontalAlignment="Stretch"
 					   VerticalAlignment="Stretch">
 
-			<TextBlock RelativePanel.AlignRightWithPanel="True"
-					   RelativePanel.AlignTopWithPanel="True"
+			<TextBlock RelativePanel.Above="BatteryAsset"
+					   RelativePanel.AlignHorizontalCenterWith="BatteryAsset"
 					   Text="🔌"
+					   Margin="15"
 					   FontSize="50" />
 
 			<Border x:Name="CircleBorder"
@@ -62,6 +71,7 @@
 					Maximum="100"
 					ValueChanged="slider_ValueChanged" />
 		</RelativePanel>
+		
 
 		<CommandBar Grid.Row="1"
 					HorizontalAlignment="Stretch"
