@@ -108,6 +108,7 @@
     <Compile Include="BatteryControl.xaml.cs">
       <DependentUpon>BatteryControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilty.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -173,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Microsoft.AdMediator.Universal, Version=1.0">
-      <Name>Microsoft.AdMediator.Universal</Name>
+      <Name>Microsoft Advertising Universal SDK</Name>
     </SDKReference>
     <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
       <Name>Microsoft Advertising SDK for XAML</Name>

@@ -1,28 +1,22 @@
 ﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:local="using:Doze"
+	  xmlns:Converters="using:Doze.Converters"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:Universal="using:Microsoft.AdMediator.Universal"
 	  xmlns:VM="using:Doze.VM"
 	  x:Class="Doze.MainPage"
 	  mc:Ignorable="d">
-
-	<Page.DataContext>
-		<VM:BatteryVM x:Name="B_VM"/>
-	</Page.DataContext>
-
+	
 	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-		
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-
 		<Grid VerticalAlignment="Top"
 			  HorizontalAlignment="Stretch"
 			  Background="#f2b632">
-
 			<TextBlock Text="DOZE"
 					   Grid.Column="1"
 					   FontFamily="Impact"
@@ -32,17 +26,13 @@
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Center"
 					   FontSize="30" />
-			
 		</Grid>
-
 		<RelativePanel Grid.Row="1"
 					   HorizontalAlignment="Stretch"
 					   VerticalAlignment="Stretch"
 					   x:Name="MainGrid"
 					   x:DeferLoadStrategy="Lazy"
 					   Visibility="Visible">
-
-
 			<Border x:Name="CircleBorder"
 					BorderThickness="5"
 					BorderBrush="GreenYellow"
@@ -50,24 +40,28 @@
 					CornerRadius="250"
 					RelativePanel.AlignHorizontalCenterWithPanel="True"
 					RelativePanel.AlignVerticalCenterWithPanel="True">
-
 				<Ellipse Height="350"
 						 Width="350"
 						 Fill="#252839"
 						 Opacity=".5" />
-
 			</Border>
-
 			<local:BatteryControl x:Name="BatteryAsset"
 								  RelativePanel.AlignHorizontalCenterWithPanel="True"
 								  RelativePanel.AlignVerticalCenterWithPanel="True" />
-			
 			<TextBlock RelativePanel.Above="BatteryAsset"
 					   RelativePanel.AlignHorizontalCenterWith="BatteryAsset"
 					   x:Name="ElectricPlugText"
 					   Text="🔌"
 					   Margin="15"
+					   Visibility="{x:Bind isCharging , Converter={StaticResource BtoV}}"
 					   FontSize="50" />
+			<Universal:AdMediatorControl x:Name="AdMediator_E76C8E"
+										 Height="50" Width="320"
+										 Margin="0,0,0,50"
+										 Id="AdMediator-Id-FC0093A9-A344-4D72-A882-26BCCBBD9CC9"
+										 RelativePanel.AlignBottomWithPanel="True"
+										 RelativePanel.AlignHorizontalCenterWithPanel="True"
+										 />
 			<!--<Slider x:Name="slider"
 					Value="0"
 					Width="300"
@@ -75,28 +69,20 @@
 					Maximum="100"
 					ValueChanged="slider_ValueChanged" />-->
 		</RelativePanel>
-
 		<CommandBar Grid.Row="1"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Bottom"
 					ClosedDisplayMode="Compact">
-
 			<CommandBar.SecondaryCommands>
-
 				<AppBarButton Label="About" />
 				<AppBarButton Label="Other Apps" />
 				<AppBarButton Label="Donate" />
-
 			</CommandBar.SecondaryCommands>
-
 			<AppBarButton Icon="Favorite"
 						  Label="Rate Us" />
 			<AppBarSeparator />
 			<AppBarButton Icon="Setting"
 						  Label="Settings" />
-
 		</CommandBar>
-		
 	</Grid>
-
 </Page>

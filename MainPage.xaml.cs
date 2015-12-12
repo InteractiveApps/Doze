@@ -1,22 +1,11 @@
 ﻿using Doze.VM;
-using Microsoft.AdMediator.Core.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Devices.Power;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.System.Power;
+using System.Diagnostics;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -37,9 +26,13 @@ namespace Doze
             "Is your Battery functioning?"
         };
 
+        public BatteryVM B_VM { get; private set; }
+
         public MainPage()
         {
             this.InitializeComponent();
+            B_VM = new VM.BatteryVM();
+            this.DataContext = B_VM;
         }
 
         protected override void OnNavigatedTo( NavigationEventArgs e )
@@ -47,7 +40,7 @@ namespace Doze
             base.OnNavigatedTo(e);
             this.FindName("MainGrid");
             MainGrid.Visibility = Visibility.Visible;
-            B_VM = new VM.BatteryVM();
+
             UpdateIndicator(B_VM);
         }
 
@@ -95,7 +88,7 @@ namespace Doze
                 ShowEmptyBattery();
                 ElectricPlugText.FontSize = 15;
                 Random r = new Random();
-                ElectricPlugText.Text = OopsText[r.Next(0, 3)];
+                ElectricPlugText.Text = OopsText[r.Next(0, OopsText.Length - 1)];
             }
 
         }
