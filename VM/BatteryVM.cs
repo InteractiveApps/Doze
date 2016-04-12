@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Power;
 using Windows.System.Power;
+using Windows.UI.Xaml;
 
 namespace Doze.VM
 {
@@ -24,7 +25,6 @@ namespace Doze.VM
 				OnPropertyChanged("Batterie");
 			}
 		}
-
 
 		private bool _isPresent;
 		public bool isPresent
@@ -63,6 +63,7 @@ namespace Doze.VM
 				isPresent = true;
 				Batterie = new BatteryModel((int)report.FullChargeCapacityInMilliwattHours , (int)report.FullChargeCapacityInMilliwattHours , (int)report.FullChargeCapacityInMilliwattHours , report.Status , (int)report.FullChargeCapacityInMilliwattHours);
 				isCharging = report.Status == BatteryStatus.Charging ? true : false;
+
 			}
 
 			B.ReportUpdated += B_ReportUpdated;
@@ -79,6 +80,7 @@ namespace Doze.VM
 			{
 				Batterie = new BatteryModel((int)report.FullChargeCapacityInMilliwattHours , (int)report.FullChargeCapacityInMilliwattHours , (int)report.FullChargeCapacityInMilliwattHours , report.Status , (int)report.FullChargeCapacityInMilliwattHours);
 				isCharging = report.Status == BatteryStatus.Charging ? true : false;
+
 			}
 
 		}
