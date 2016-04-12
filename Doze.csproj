@@ -108,13 +108,11 @@
     <Compile Include="BatteryControl.xaml.cs">
       <DependentUpon>BatteryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BoolToVisibilty.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\BatteryModel.cs" />
+    <Compile Include="MVVM\ViewModels\PowerVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VM\BatteryVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -183,7 +181,11 @@
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Converters\" />
+    <Folder Include="MVVM\Models\" />
+    <Folder Include="MVVM\Views\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
